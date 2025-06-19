@@ -34,16 +34,20 @@ function cpython_configure_and_build() {
                     --with-computed-gotos=no \
                     --with-remote-debug=no \
                     --disable-test-modules \
-                    --with-ensurepip=no | tee "$LOG_DIR/cpython_configure.log"
+                    --with-ensurepip=no | tee "$LOG_DIR/cpython_configure_${ac_cv_func}.log"
+        if [ $? -ne 0 ]; then
+            log_err "CPython configure failed. Check the log at $LOG_DIR/cpython_configure_${ac_cv_func}.log"
+    popd
+            return 99
+        fi
 
-        set +e
         make -j$(nproc) 2>&1 | tee "$LOG_DIR/cpython_build_${ac_cv_func}.log"
         if [ $? -ne 0 ]; then
             log_err "CPython build failed. Check the log at $LOG_DIR/cpython_build_${ac_cv_func}.log"
     popd
             return 99
         fi
-        set -e
+        # set -e
     popd
         return 0
 }
@@ -59,10 +63,13 @@ while IFS= read -r func; do
     echo "ac_cv_func_${func}=no" >> "$SCRIPT_DIR/config.site"
     
     # Try to build with this function disabled
+    set +e
     cpython_configure_and_build "$func"
     ret=$?
+    set -e
     
     echo "retrun code: $ret"
+    
     if [ $ret -eq 0 ]; then
         echo "Build successful with ac_cv_func_${func}=no - keeping the line"
     elif [ $ret -eq 99 ]; then
