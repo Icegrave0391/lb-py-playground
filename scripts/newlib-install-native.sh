@@ -22,7 +22,8 @@ pushd $NEWLIB_OUT_DIR
         --prefix="$NEWLIB_OUT_DIR" \
         --target="x86_64-elf" \
         --with-newlib \
-        --disable-multilib
+        --disable-multilib \
+        --disable-werror
     
     make -j$(nproc) 2>&1 | tee "$LOG_DIR/newlib_build_native.log"
 

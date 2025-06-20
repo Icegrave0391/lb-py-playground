@@ -30,4 +30,9 @@ pushd ${CROSS_GCC_OUT_DIR}
     
     make -j$(nproc) 2>&1 | tee "$LOG_DIR/cross_gcc_build.log"
     sudo make install 2>&1 | tee "$LOG_DIR/cross_gcc_install.log"
+
+    # also create a symlink for the x86_64-elf-cc
+    if [ ! -f "$HOME/local/bin/x86_64-elf-cc" ]; then
+        sudo ln -s "$HOME/local/bin/x86_64-elf-gcc" "$HOME/local/bin/x86_64-elf-cc"
+    fi
 popd
