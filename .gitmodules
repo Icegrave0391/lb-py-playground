@@ -1,3 +1,6 @@
 [submodule "cpython"]
 	path = cpython
 	url = git@github.com:Icegrave0391/cpython.git
+[submodule "newlib"]
+	path = newlib
+	url = git@github.com:Icegrave0391/newlib.git
