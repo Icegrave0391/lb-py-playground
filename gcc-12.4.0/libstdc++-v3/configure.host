@@ -283,6 +283,9 @@ case "${host_os}" in
     esac
     OPT_LDFLAGS="${OPT_LDFLAGS} \$(lt_host_flags)"
     ;;
+  litebox*)
+    os_include_dir="os/litebox/"
+    ;;
   netbsd*)
     os_include_dir="os/bsd/netbsd"
     ;;
