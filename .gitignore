@@ -2,3 +2,6 @@
 /logs
 /*-out
 /compile-toolchain
+*.objdump
+.gdb_history
+test-*
