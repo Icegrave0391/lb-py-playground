@@ -5,3 +5,4 @@
 *.objdump
 .gdb_history
 test-*
+peda-session*.txt
