@@ -10,17 +10,21 @@ if [ ! -d "$CROSS_BINUTILS_DIR" ]; then
     popd
 fi
 
-CROSS_TARGET=x86_64-litebox
+CROSS_TARGET=${CROSS_TARGET:-x86_64-litebox}
 
 mkdir -p "$CROSS_BINUTILS_OUT_DIR"
+mkdir -p "$COMPILE_TOOLCHAIN_OUT"
+
+PREFIX="$COMPILE_TOOLCHAIN_OUT"
+
 pushd ${CROSS_BINUTILS_OUT_DIR}
     log_info "Building Binutils for target: $CROSS_TARGET"
     make distclean || true
 
     $CROSS_BINUTILS_DIR/configure \
-        --prefix="$CROSS_BINUTILS_OUT_DIR" \
+        --prefix=$PREFIX \
         --target=$CROSS_TARGET \
-        --with-sysroot="$CROSS_BINUTILS_OUT_DIR" \
+        --with-sysroot="$PREFIX" \
         --disable-nls \
         --disable-multilib \
         --disable-sim \
