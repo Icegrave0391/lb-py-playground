@@ -1,23 +1,16 @@
 #include <stdio.h>
-// quick test
-#include <sys/stat.h>
-
-// int fstat(int fd, struct stat *buf) {
-//   return 0;               // Return success
-// }
+#include <unistd.h>
 
 int testagain(void) {
   return 42;
 }
 
-void main(void) {
+int main(int argc, char *argv[]) {
   int a = 5; 
   int ans = testagain();
-  // putchar('a');
-}
-
-void _start(void) {
-  // This function is called before main, typically used for initialization.
-  // You can put any setup code here.
-  main();
+  
+  // Write a test message to stdout
+  write(1, "Hello from LiteBox!\n", 20);
+  
+  return ans; // Return the result from testagain
 }
